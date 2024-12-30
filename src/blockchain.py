@@ -28,8 +28,8 @@ class Block:
     def calculate_hash(self):
         block_str = str(self.index) + self.protocol_ver + self.timestamp + self.data + self.previous_hash
 
-        return sha256(block_str.encode()).hexdigest()
-    
+        return sha256(block_str.encode('ASCII')).hexdigest()
+
     def __repr__(self):
         return (
             f'Block #{self.index}\n'
@@ -39,11 +39,11 @@ class Block:
             f'Meta hash: {self.hash}\n'
             f'Data:\n\n{self.data}\n'
         )
-    
+
 class BlockChain:
     def __init__(self):
         timestamp = str(datetime.now())
-        self.chain = [Block(0, timestamp, "Genesis Block", NULL_HASH)]
+        self.chain = [Block(0, timestamp, '', NULL_HASH)]
 
     def add_block(self, data: str):
         index = self.chain[-1].index + 1
